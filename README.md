@@ -2,11 +2,11 @@
 
 This exercise is part of my Data Engineering and Machine Learning Fundamental training provided by Google. ‘Create ML Models with Big Query ML Challenge Lab’ is a non-guided lab under the quest of ‘Create ML Models with Big Query ML’ from Google Skills Boost. 
 
-Scenario
+# Scenario
 
 You have started a new role as a junior member of the Data Science department Jooli Inc. Your team is working on a number of machine learning initiatives related to urban mobility services. You are expected to help with the development and assessment of data sets and machine learning models to help provide insights based on real work data sets.
 
-challenge
+# Challenge
 
 One of the projects you are working on needs to provide analysis based on real world data that will help in the selection of new bicycle models for public bike share systems. Your role in this project is to develop and evaluate machine learning models that can predict average trip durations for bike schemes using the public data from Austin's public bike share scheme to train and evaluate your models.
 
@@ -19,5 +19,6 @@ You can access the public data for the Austin bike share scheme in your project 
 As a final step you must create and run a query that uses the model that includes subscriber type as a feature, to predict the average trip duration for all trips from the busiest bike sharing station in 2020 (based on the number of trips per station in 2020) where the subscriber type is 'Single Trip'.
 
 Lab link: https://www.cloudskillsboost.google/focuses/14294?parent=catalog
+
 Dataset: https://console.cloud.google.com/bigquery?p=bigquery-public-data&d=austin_bikeshare&page=dataset&project=sacred-particle-340305
 
