@@ -14,11 +14,11 @@ Two of the senior data scientists in your team have different theories on what f
 
 You have been asked to develop a machine learning model based on each of these input features. Given the fact that stay-at-home orders were in place for Austin during parts of 2021 as a result of COVID-19 you will be working on data from previous years. You have been instructed to train your models on data from 2017 and then evaluate them against data from 2020 on the basis of Mean Absolute Error and the square root of Mean Squared Error.
 
-You can access the public data for the Austin bike share scheme in your project by opening this link to the Austin bike share dataset in the browser tab for your lab.
+You can access the public data for the Austin bike share scheme in your project by opening the Austin bike share dataset on link below.
 
 As a final step you must create and run a query that uses the model that includes subscriber type as a feature, to predict the average trip duration for all trips from the busiest bike sharing station in 2020 (based on the number of trips per station in 2020) where the subscriber type is 'Single Trip'.
 
-Lab link: https://www.cloudskillsboost.google/focuses/14294?parent=catalog
+Lab: https://www.cloudskillsboost.google/focuses/14294?parent=catalog
 
 Dataset: https://console.cloud.google.com/bigquery?p=bigquery-public-data&d=austin_bikeshare&page=dataset&project=sacred-particle-340305
 
