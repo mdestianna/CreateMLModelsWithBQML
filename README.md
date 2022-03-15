@@ -22,7 +22,8 @@ Lab: https://www.cloudskillsboost.google/focuses/14294?parent=catalog
 
 Dataset: https://console.cloud.google.com/bigquery?p=bigquery-public-data&d=austin_bikeshare&page=dataset&project=sacred-particle-340305
 
-## Task 1 Create dataset
+## Task 1 Create a dataset to store your machine learning models
+
 
 ## Task 2 Create forecasting BQML model
 Create the first machine learning model to predict the trip duration for bike trips. The features of this model must incorporate the starting station name, the hour the trip started, the weekday of the trip, and the address of the start station labeled as location. You must use 2017 data only to train this model.
