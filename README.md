@@ -69,6 +69,7 @@ WHERE
 ## Task 4 Evaluate the two machine learning models
 Evaluate each of the machine learning models against 2020 data only using separate queries. Your queries must report both the Mean Absolute Error and the Root Mean Square Error.
 
+### 1st Model
 ```
 SELECT SQRT (mean_squared_error) AS rmse,
     Mean_absolute_error
@@ -89,7 +90,10 @@ WHERE
     EXTRACT(YEAR FROM B1.start_time) = 2020
     AND duration_minutes > 0)
     )
+```
 
+### 2nd Model
+```
 SELECT SQRT (mean_squared_error) AS rmse,
     Mean_absolute_error
 FROM ML.EVALUATE(MODEL biketrip.biketrip_model2,
