@@ -22,3 +22,121 @@ Lab: https://www.cloudskillsboost.google/focuses/14294?parent=catalog
 
 Dataset: https://console.cloud.google.com/bigquery?p=bigquery-public-data&d=austin_bikeshare&page=dataset&project=sacred-particle-340305
 
+## Task 1 Create dataset
+
+## Task 2 Create forecasting BQML model
+Create the first machine learning model to predict the trip duration for bike trips. The features of this model must incorporate the starting station name, the hour the trip started, the weekday of the trip, and the address of the start station labeled as location. You must use 2017 data only to train this model.
+
+```
+CREATE or REPLACE MODEL biketrip.biketrip_model1
+OPTIONS
+  (model_type='linear_reg', labels=['duration_minutes']) AS
+SELECT
+    B1.start_station_name,
+    EXTRACT(HOUR FROM B1.start_time) AS starthour,
+    EXTRACT(DAYOFWEEK FROM B1.start_time) AS dayofweek,
+    B2.address as location,
+    duration_minutes
+FROM
+    `bigquery-public-data.austin_bikeshare.bikeshare_trips` as B1 
+INNER JOIN 
+    `bigquery-public-data.austin_bikeshare.bikeshare_stations` as B2
+ON B1.start_station_id = B2.station_id
+WHERE
+    EXTRACT(YEAR FROM B1.start_time) = 2017
+    AND duration_minutes > 0
+```
+
+## Task 3 Create the second machine learning model
+Create the second machine learning model to predict the trip duration for bike trips. The features of this model must incorporate the starting station name, the bike share subscriber type and the start time for the trip. You must also use 2017 data only to train this model.
+
+```
+CREATE or REPLACE MODEL biketrip.biketrip_model2
+OPTIONS
+  (model_type='linear_reg', labels=['duration_minutes']) AS
+SELECT
+    start_station_name,
+    subscriber_type,
+    EXTRACT(HOUR FROM start_time) AS starthour,
+    duration_minutes
+FROM
+    `bigquery-public-data.austin_bikeshare.bikeshare_trips` 
+WHERE
+    EXTRACT(YEAR FROM start_time) = 2017
+    AND duration_minutes > 0
+```
+
+## Task 4 Evaluate the two machine learning models
+Evaluate each of the machine learning models against 2020 data only using separate queries. Your queries must report both the Mean Absolute Error and the Root Mean Square Error.
+
+```
+SELECT SQRT (mean_squared_error) AS rmse,
+    Mean_absolute_error
+FROM ML.EVALUATE(MODEL biketrip.biketrip_model1,
+    (
+    SELECT
+    B1.start_station_name,
+    EXTRACT(HOUR FROM B1.start_time) AS starthour,
+    EXTRACT(DAYOFWEEK FROM B1.start_time) AS dayofweek,
+    B2.address as location,
+    duration_minutes
+    FROM
+    `bigquery-public-data.austin_bikeshare.bikeshare_trips` as B1 
+INNER JOIN 
+    `bigquery-public-data.austin_bikeshare.bikeshare_stations` as B2
+ON B1.start_station_id = B2.station_id
+WHERE
+    EXTRACT(YEAR FROM B1.start_time) = 2020
+    AND duration_minutes > 0)
+    )
+
+SELECT SQRT (mean_squared_error) AS rmse,
+    Mean_absolute_error
+FROM ML.EVALUATE(MODEL biketrip.biketrip_model2,
+    (
+    SELECT
+    start_station_name,
+    subscriber_type,
+    EXTRACT(HOUR FROM start_time) AS starthour,
+    duration_minutes
+    FROM
+    `bigquery-public-data.austin_bikeshare.bikeshare_trips` 
+WHERE
+    EXTRACT(YEAR FROM start_time) = 2020
+    AND duration_minutes > 0)
+    )
+```
+
+## Task 5 Use the subscriber type machine learning model to predict average trip durations
+When both models have been created and evaulated, use the second model, that uses subscriber_type as a feature, to predict average trip length for trips from the busiest bike sharing station in 2020 where the subscriber type is Single Trip.
+
+```
+SELECT
+   start_station_name,
+   COUNT(*) AS trips
+FROM `bigquery-public-data.austin_bikeshare.bikeshare_trips`
+WHERE EXTRACT(YEAR FROM start_time) = 2020
+GROUP BY start_station_name
+ORDER BY trips DESC
+```
+```
+SELECT AVG(predicted_duration_minutes) as average_duration_minutes
+FROM ML.PREDICT(MODEL `biketrip.biketrip_model2`, 
+(
+SELECT
+    start_station_name,
+    subscriber_type,
+    EXTRACT(HOUR FROM start_time) AS starthour,
+    duration_minutes
+FROM
+    `bigquery-public-data.austin_bikeshare.bikeshare_trips`  
+WHERE
+    EXTRACT(YEAR FROM start_time) = 2020
+    AND subscriber_type = 'Single Trip (Pay-as-you-ride)'
+    AND start_station_name = 'Riverside/South Lamar'))
+```
+
+
+
+
+
